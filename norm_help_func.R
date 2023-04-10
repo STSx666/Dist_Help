@@ -6,14 +6,10 @@ norm_help <- function(percentile = NULL,
 
   # Load/Install Packages  
   if(!require(ggplot2)){install.packages("ggplot2")}
+  if(!require(svglite)){install.packages("svglite")}
   if(!require(ggrepel)){install.packages("ggrepel")}
   if(!require(dplyr)){install.packages("dplyr")}
-  if(!require(RColorBrewer)){install.packages("RColorBrewer")}
-  
-  #Colour Pallette  
-  palette = brewer.pal(9, "Greens")
-  inc = 2
-  
+
   #Function agruments
   cent <- mean
   spread <- sd
@@ -35,7 +31,7 @@ norm_help <- function(percentile = NULL,
   
   df <- data.frame(x = x,
                    y = dnorm(x, mean = cent, sd = spread),
-                   lab = paste("Percentile = ", perc,
+                   lab = paste("Percentile = ", round(perc, 2),
                                "\nz = ", round(z, 2),
                                "\nQuantile = ", round(quant, 2),
                                sep = "")
@@ -93,7 +89,9 @@ norm_help <- function(percentile = NULL,
                    "When you have a \U00B5 = 0 and a \U03C3 = 1, the ",
                    "x-axis is z-scores.",
                    sep = "")
-  
+  title <- paste("Normal Distribution:\n\U00B5 = ", round(cent, 2),
+                 ", \U03C3 = ", round(spread, 2),
+                 sep = "")
   
   
   plot <- ggplot(df, aes(x = x, y = y)) +
@@ -148,11 +146,13 @@ norm_help <- function(percentile = NULL,
     scale_x_continuous(breaks = df_seg$seg_loc) +
     labs(x = "Quantile\n(i.e., x-value)",
          y = "Density",
+         title = title,
          caption = caption) +
     
     theme_classic() +
     
-    theme(plot.caption = element_text(hjust=0, size = 14),
+    theme(plot.title = element_text(hjust=0.5, size = 24, face = "bold"),
+          plot.caption = element_text(hjust=0, size = 14),
           axis.text = element_text(colour = "black", size = 18),
           axis.title = element_text(colour = "black", size = 20)
           )
