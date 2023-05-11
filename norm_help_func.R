@@ -5,12 +5,11 @@ norm_help <- function(percentile = NULL,
                       save = FALSE) {
 
   # Load/Install Packages  
-  if(!require(ggplot2)){install.packages("ggplot2")}
-  if(!require(svglite)){install.packages("svglite")}
-  if(!require(ggrepel)){install.packages("ggrepel")}
-  if(!require(dplyr)){install.packages("dplyr")}
+  if (!require('ggplot2')) install.packages('ggplot2'); library('ggplot2')
+  if (!require('svglite')) install.packages('svglite'); library('svglite')
+  if (!require('ggrepel')) install.packages('ggrepel'); library('ggrepel')
 
-  #Function agruments
+  #Function Arguments
   cent <- mean
   spread <- sd
   
@@ -30,11 +29,10 @@ norm_help <- function(percentile = NULL,
   x <- seq((cent - spread*3.5), (cent + spread*3.5), by = 0.01)
   
   df <- data.frame(x = x,
-                   y = dnorm(x, mean = cent, sd = spread),
-                   lab = paste("Percentile = ", round(perc, 2),
-                               "\nz = ", round(z, 2),
-                               "\nQuantile = ", round(quant, 2),
-                               sep = "")
+                   y = dnorm(x, 
+                             mean = cent, 
+                             sd = spread
+                             )
                    )
   
   
@@ -45,7 +43,10 @@ norm_help <- function(percentile = NULL,
   )
   
   df_seg$seg_loc = cent + spread * df_seg$segs
-  df_seg$y_seg = dnorm(df_seg$seg_loc, mean = cent, sd = spread)
+  df_seg$y_seg = dnorm(df_seg$seg_loc,
+                       mean = cent,
+                       sd = spread
+                       )
   
   #Text
     #Percentages
@@ -56,11 +57,15 @@ norm_help <- function(percentile = NULL,
   text_df <- data.frame(text,
                         x = seq(cent - 3.25 * spread,
                                 cent + 3.25 * spread, 
-                                length.out = 14),
+                                length.out = 14
+                                ),
                         y = dnorm(seq(cent - 3.25 * spread,
                                       cent + 3.25 * spread, 
-                                      length.out = 14),
-                                  mean = cent, sd = spread)
+                                      length.out = 14
+                                      ),
+                                  mean = cent, 
+                                  sd = spread
+                                  )
   )
   
     #Height Adjustment
@@ -93,10 +98,8 @@ norm_help <- function(percentile = NULL,
                  ", \U03C3 = ", round(spread, 2),
                  sep = "")
   
-  
   plot <- ggplot(df, aes(x = x, y = y)) +
-    #geom_line(linewidth = 1) +
-    
+
     #Percentile shading
     geom_ribbon(data = subset(df, x < quant), 
                 aes(ymax = y, ymin = 0),
@@ -115,7 +118,20 @@ norm_help <- function(percentile = NULL,
                                     yend = y_seg)) +
   
     #Requested Point
-    geom_label_repel(data = subset(df, near(x, round(quant, 2))),
+    geom_label_repel(data = data.frame(x = quant,
+                                       y = dnorm(quant,
+                                                 mean = cent,
+                                                 sd = spread
+                                             ),
+                                       lab = paste("Percentile = ", 
+                                                   round(perc, 2),
+                                                   "\nz = ", 
+                                                   round(z, 2),
+                                                   "\nQuantile = ", 
+                                                   round(quant, 2),
+                                                   sep = ""
+                                                   )
+                                       ),
                      aes(label = lab),
                      box.padding   = 0.35, 
                      point.padding = 1,
@@ -123,31 +139,40 @@ norm_help <- function(percentile = NULL,
                      nudge_x = x_nudge,
                      segment.angle = 20,
                      segment.size  = 0.75, 
-                     size = 6) +
+                     size = 6
+                     ) +
     
     geom_segment(x = quant, 
                  y = 0, 
                  xend = quant, 
                  yend = dnorm(quant, mean = cent, sd = spread),
                  colour = "red", 
-                 linewidth = 1) +
+                 linewidth = 1
+                 ) +
     
-    geom_point(data = subset(df, near(x, round(quant, 2))),
+    geom_point(mapping = aes(x = quant, 
+                             y = dnorm(quant,
+                                       mean = cent,
+                                       sd = spread)
+                             ),
                colour = "red", 
-               size = 5) +
+               size = 5
+               ) +
     
     #Percentage Labels
     geom_text(data = text_df, aes(x = x, y = y), 
               label = paste(text, "%", sep = ""),
               colour = "#696969",
-              size = 6) +
+              size = 6
+              ) +
     
     #Axis
-    scale_x_continuous(breaks = df_seg$seg_loc) +
+    scale_x_continuous(breaks = round(df_seg$seg_loc, 2)) +
     labs(x = "Quantile\n(i.e., x-value)",
          y = "Density",
          title = title,
-         caption = caption) +
+         caption = caption
+         ) +
     
     theme_classic() +
     
@@ -166,5 +191,5 @@ norm_help <- function(percentile = NULL,
     
     message(paste("File saved as '", filename, "'", sep = ""))
   }
-}
 
+}
