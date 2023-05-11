@@ -167,7 +167,8 @@ norm_help <- function(percentile = NULL,
               ) +
     
     #Axis
-    scale_x_continuous(breaks = round(df_seg$seg_loc, 2)) +
+    scale_x_continuous(breaks = round(df_seg$seg_loc, 2),
+                       limits = c(min(x), max(x))) +
     labs(x = "Quantile\n(i.e., x-value)",
          y = "Density",
          title = title,
