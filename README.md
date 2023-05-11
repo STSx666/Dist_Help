@@ -5,7 +5,12 @@ A simple function to illustrate the distinction between percentiles, z-scores, a
 
 ## Example output
 
-```norm_help(percentile = 11, z = NULL, mean = 666, sd = 13, save = FALSE)```
+```norm_help(percentile = 11, 
+              z = NULL, 
+              quantile = NULL,
+              mean = 666,
+              sd = 13,
+              save = FALSE)```
 
 <img title="11th Percentile Plot.svg" src="11th Percentile Plot.svg">
 
@@ -17,6 +22,8 @@ A simple function to illustrate the distinction between percentiles, z-scores, a
 ```percentile``` Percentile value displayed on plot.
 
 ```z``` Z-score value displayed on plot.
+
+```quantile``` X-axis point-value displayed on plot.
 
 ```mean, sd``` Distribution's specified mean and standard deviation. Defaults to 0 and 1, respectively.
 

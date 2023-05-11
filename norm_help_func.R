@@ -1,5 +1,6 @@
 norm_help <- function(percentile = NULL, 
                       z = NULL,
+                      quantile = NULL,
                       mean = 0, 
                       sd = 1, 
                       save = FALSE) {
@@ -16,16 +17,21 @@ norm_help <- function(percentile = NULL,
   if (is.numeric(percentile)) {
     perc <- percentile
     z <- qnorm(perc/100, mean = 0, sd = 1)
+    quant <- qnorm(perc/100, mean = cent, sd = spread)
   } else if (is.numeric(z)) {
     perc <- pnorm(z, mean = 0, sd = 1) * 100
+    quant <- qnorm(perc/100, mean = cent, sd = spread)
+  } else if (is.numeric(quantile)) {
+    quant <- quantile
+    perc <- pnorm(quantile, mean = cent, sd = spread) * 100
+    z <- qnorm(perc/100, mean = 0, sd = 1)
   } else {
     perc <- .0001
     z <- qnorm(perc/100, mean = 0, sd = 1)
+    quant <- qnorm(perc/100, mean = cent, sd = spread)
   }
   
   #Main Distribution
-  quant <- qnorm(perc/100, mean = cent, sd = spread)
-  
   x <- seq((cent - spread*3.5), (cent + spread*3.5), by = 0.01)
   
   df <- data.frame(x = x,
