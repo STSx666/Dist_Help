@@ -5,12 +5,15 @@ A simple function to illustrate the distinction between percentiles, z-scores, a
 
 ## Example output
 
-```norm_help(percentile = 11, 
-              z = NULL, 
-              quantile = NULL,
-              mean = 666,
-              sd = 13,
-              save = FALSE)```
+```
+norm_help(percentile = 11,
+          z = NULL, 
+          quantile = NULL,
+          mean = 666,
+          sd = 13,
+          save = FALSE
+          )
+```
 
 <img title="11th Percentile Plot.svg" src="11th Percentile Plot.svg">
 
