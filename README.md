@@ -11,6 +11,7 @@ norm_help(percentile = 11,
           quantile = NULL,
           mean = 666,
           sd = 13,
+          title = "Normal Distribution"
           save = FALSE
           )
 ```
@@ -29,6 +30,8 @@ norm_help(percentile = 11,
 ```quantile``` X-axis point-value displayed on plot.
 
 ```mean, sd``` Distribution's specified mean and standard deviation. Defaults to 0 and 1, respectively.
+
+```title``` Plot title.
 
 ```save``` logical evaluating to ```TRUE``` or ```FALSE``` indicating if plot should be saved.  
 

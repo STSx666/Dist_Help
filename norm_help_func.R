@@ -2,7 +2,8 @@ norm_help <- function(percentile = NULL,
                       z = NULL,
                       quantile = NULL,
                       mean = 0, 
-                      sd = 1, 
+                      sd = 1,
+                      title = "Normal Distribution",
                       save = FALSE) {
 
   # Load/Install Packages  
@@ -100,7 +101,7 @@ norm_help <- function(percentile = NULL,
                    "When you have a \U00B5 = 0 and a \U03C3 = 1, the ",
                    "x-axis is z-scores.",
                    sep = "")
-  title <- paste("Normal Distribution:\n\U00B5 = ", round(cent, 2),
+  subtitle <- paste("\U00B5 = ", round(cent, 2),
                  ", \U03C3 = ", round(spread, 2),
                  sep = "")
   
@@ -187,12 +188,14 @@ norm_help <- function(percentile = NULL,
     labs(x = "Quantile\n(i.e., x-value)",
          y = "Density",
          title = title,
+         subtitle = subtitle,
          caption = caption
          ) +
     
     theme_classic() +
     
     theme(plot.title = element_text(hjust=0.5, size = 24, face = "bold"),
+          plot.subtitle = element_text(hjust=0.5, size = 18, face = "bold"),
           plot.caption = element_text(hjust=0, size = 14),
           axis.text = element_text(colour = "black", size = 18),
           axis.title = element_text(colour = "black", size = 20)
