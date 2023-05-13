@@ -124,46 +124,55 @@ norm_help <- function(percentile = NULL,
                                     yend = y_seg)) +
   
     #Requested Point
-    geom_label_repel(data = data.frame(x = quant,
-                                       y = dnorm(quant,
-                                                 mean = cent,
-                                                 sd = spread
-                                             ),
-                                       lab = paste("Percentile = ", 
-                                                   round(perc, 2),
-                                                   "\nz = ", 
-                                                   round(z, 2),
-                                                   "\nQuantile = ", 
-                                                   round(quant, 2),
-                                                   sep = ""
-                                                   )
-                                       ),
-                     aes(label = lab),
-                     box.padding   = 0.35, 
-                     point.padding = 1,
-                     segment.color = 'black',
-                     nudge_x = x_nudge,
-                     segment.angle = 20,
-                     segment.size  = 0.75, 
-                     size = 6
-                     ) +
-    
-    geom_segment(x = quant, 
-                 y = 0, 
-                 xend = quant, 
-                 yend = dnorm(quant, mean = cent, sd = spread),
-                 colour = "red", 
-                 linewidth = 1
-                 ) +
-    
-    geom_point(mapping = aes(x = quant, 
-                             y = dnorm(quant,
-                                       mean = cent,
-                                       sd = spread)
-                             ),
-               colour = "red", 
-               size = 5
-               ) +
+    {
+      if(perc > 0.001) {
+        geom_label_repel(data = data.frame(x = quant,
+                                           y = dnorm(quant,
+                                                     mean = cent,
+                                                     sd = spread
+                                                     ),
+                                           lab = paste("Percentile = ", 
+                                                       round(perc, 2),
+                                                       "\nz = ", 
+                                                       round(z, 2),
+                                                       "\nQuantile = ", 
+                                                       round(quant, 2),
+                                                       sep = ""
+                                                       )
+                                           ),
+                         aes(label = lab),
+                         box.padding   = 0.35, 
+                         point.padding = 1,
+                         segment.color = 'black',
+                         nudge_x = x_nudge,
+                         segment.angle = 20,
+                         segment.size  = 0.75, 
+                         size = 6
+        )
+        } 
+      } + {
+      if(perc > 0.001) {
+        geom_segment(x = quant, 
+                     y = 0, 
+                     xend = quant, 
+                     yend = dnorm(quant, mean = cent, sd = spread),
+                     colour = "red", 
+                     linewidth = 1
+                     )
+                    }
+        
+      } + {
+      if(perc > 0.001) {
+        geom_point(mapping = aes(x = quant,
+                                 y = dnorm(quant,
+                                           mean = cent,
+                                           sd = spread)
+                                 ),
+                   colour = "red", 
+                   size = 5
+                  )
+                }
+              } +
     
     #Percentage Labels
     geom_text(data = text_df, aes(x = x, y = y), 
