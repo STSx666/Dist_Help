@@ -90,7 +90,7 @@ norm_help <- function(percentile = NULL,
                    
                    "\n        Can be conceptualized as 'area under the curve' ",
                    "calculated from left to right. ",
-                   "The 100th percentile the entire area.",
+                   "\n        E.g., The 50th percentile equals 50% of the area under the curve shaded.",
                    
                    "\n\nz-score: Distance from the mean (\U00B5) in standard ",
                    "deviations (\U03C3). ", 
@@ -127,7 +127,7 @@ norm_help <- function(percentile = NULL,
   
     #Requested Point
     {
-      if(perc > 0.001) {
+      if(perc > 0.01 & perc <= 99.99) {
         geom_label_repel(data = data.frame(x = quant,
                                            y = dnorm(quant,
                                                      mean = cent,
@@ -153,7 +153,7 @@ norm_help <- function(percentile = NULL,
         )
         } 
       } + {
-      if(perc > 0.001) {
+      if(perc > 0.01 & perc <= 99.99) {
         geom_segment(x = quant, 
                      y = 0, 
                      xend = quant, 
@@ -164,7 +164,7 @@ norm_help <- function(percentile = NULL,
                     }
         
       } + {
-      if(perc > 0.001) {
+      if(perc > 0.01 & perc <= 99.99) {
         geom_point(mapping = aes(x = quant,
                                  y = dnorm(quant,
                                            mean = cent,
@@ -184,8 +184,7 @@ norm_help <- function(percentile = NULL,
               ) +
     
     #Axis
-    scale_x_continuous(breaks = round(df_seg$seg_loc, 2),
-                       limits = c(min(x), max(x))) +
+    scale_x_continuous(breaks = round(df_seg$seg_loc, 2)) +
     labs(x = "Quantile\n(i.e., x-value)",
          y = "Density",
          title = title,
