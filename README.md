@@ -49,4 +49,3 @@ The following CRAN packages are necessary to run this function and will be autom
   - ggplot2
   - svglite
   - ggrepel
-  - dplyr
