@@ -4,6 +4,7 @@ norm_help <- function(percentile = NULL,
                       mean = 0, 
                       sd = 1,
                       title = "Normal Distribution",
+                      colour = "#00BFFF",
                       save = FALSE) {
 
   # Load/Install Packages  
@@ -110,7 +111,7 @@ norm_help <- function(percentile = NULL,
     #Percentile shading
     geom_ribbon(data = subset(df, x < quant), 
                 aes(ymax = y, ymin = 0),
-                fill = "#00BFFF", 
+                fill = colour, 
                 colour = NA, 
                 alpha = .5) +
     
